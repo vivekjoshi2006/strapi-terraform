@@ -1,9 +1,8 @@
-provider "aws" {
-  region = "us-east-1"
+module "ssh_key" {
+  source = "./modules/ssh-key"
 }
 
-module "strapi_server" {
-  source        = "./modules/ec2_instance"
-  instance_type = "t3.small" # Strapi recommends at least 2GB RAM
-  key_name      = "strapi-key"
+module "compute" {
+  source    = "./modules/compute"
+  key_name  = module.ssh_key.key_name
 }
